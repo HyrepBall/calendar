@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Fade from '@material-ui/core/Fade';
+import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 
@@ -13,25 +13,25 @@ const styles = theme => ({
   }
 });
 
-class SingleTasks extends Component {
+class CompletedTasks extends Component {
 
-  handleRemoveTask(index) {
+  onUndo(task, index) {
+    this.props.onAddTask({
+      type: task.actionType,
+      payload: task,
+    })
+
     this.props.onRemoveTask({
-      type: 'SINGLE_REMOVE',
+      type: 'COMPLETE_REMOVE',
       payload: {
         index: index
       }
     })
   }
 
-  onCompleteTask(task, index) {
-    this.props.onCompleteTask({
-      type: 'COMPLETE_ADD',
-      payload: task
-    });
-
+  handleRemoveTask(index) {
     this.props.onRemoveTask({
-      type: 'SINGLE_REMOVE',
+      type: 'COMPLETE_REMOVE',
       payload: {
         index: index
       }
@@ -44,22 +44,22 @@ class SingleTasks extends Component {
     return (
       <div className="">
         {
-          tasks.length === 0 &&
+          tasks.length === 0  &&
           <Typography variant="headline" color="textPrimary" classes={{root: classes.emptyTitle}}>
-            Нет активных задач
+            Нет выполненных задач
           </Typography>
         }
         {tasks.map((task, index) => {
           return (
-            <Fade direction="up" key={task.id} mountOnEnter unmountOnExit in>
+            <Slide direction="up" key={task.id} mountOnEnter unmountOnExit in>
               <div className="list-item">
                 {task.title}
                 <span className="list-item-icons"  >
                   <Icon
-                    style={{fontSize: 22, marginRight: 20, color: '#00CE6A',}}
-                    onClick={() => this.onCompleteTask(task, index)}
+                    style={{fontSize: 22, marginRight: 20, color: '#4B89DC',}}
+                    onClick={() => this.onUndo(task, index)}
                   >
-                    done
+                    undo
                   </Icon>
                   <Icon
                     style={{fontSize: 22, color: '#EA5946'}}
@@ -69,7 +69,7 @@ class SingleTasks extends Component {
                   </Icon>
                 </span>
               </div>
-            </Fade>
+            </Slide>
           )
         })}
       </div>
@@ -77,4 +77,4 @@ class SingleTasks extends Component {
   }
 }
 
-export default withStyles(styles)(SingleTasks); 
+export default withStyles(styles)(CompletedTasks); 

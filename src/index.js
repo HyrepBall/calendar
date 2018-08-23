@@ -8,6 +8,9 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { ConnectedRouter } from 'connected-react-router'
 
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import theme from './utils/theme';
+
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -28,10 +31,12 @@ const store = createStore(
 )
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <App />
-    </ConnectedRouter>
-  </Provider>,
+  <MuiThemeProvider theme={theme}>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('root'));
 registerServiceWorker();

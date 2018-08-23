@@ -8,11 +8,10 @@ import BottomNavigation from './components/BottomNavigation';
 
 import './App.css';
 
-
-
 class App extends Component {
 
   render() {
+    console.log(this.props)
 
     const { onAddTask } = this.props;
 
@@ -20,7 +19,7 @@ class App extends Component {
       <div className="wrapper app-layout">
         <Switch>
           <Route exact path="/"
-            render={() => <Tasks />}
+            render={() => <Tasks {...this.props} />}
           />
           <Route exact path="/add"
             render={() => <AddForm onAddTask={onAddTask} />}
@@ -43,6 +42,12 @@ export default connect(
   }),
   dispatch => ({
     onAddTask: (task) => {
+      dispatch({type: task.type, payload: task.payload})
+    },
+    onRemoveTask: (task) => {
+      dispatch({type: task.type, payload: task.payload})
+    },
+    onCompleteTask: (task) => {
       dispatch({type: task.type, payload: task.payload})
     },
   })

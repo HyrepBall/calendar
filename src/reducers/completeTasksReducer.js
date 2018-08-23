@@ -1,16 +1,17 @@
 
-function singleTasksReducer(items = [], action) {
+function completeTasksReducer(items = [], action) {
   switch(action.type) {
-    case 'SINGLE_ADD' :
+    case 'COMPLETE_ADD' :
       return [
         ...items,
         action.payload,
       ]
-    case 'SINGLE_REMOVE' : 
+    case 'COMPLETE_REMOVE' : 
       return items.filter(item => items.indexOf(item) !== action.payload.index)
     default:
       return items;
   }
+  
 };
 
-export default singleTasksReducer;
+export default completeTasksReducer;
